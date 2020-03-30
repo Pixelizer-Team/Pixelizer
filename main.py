@@ -6,31 +6,29 @@ import numpy as np
 from hexgrid import calculate_polygons
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
+from sklearn.metrics import pairwise_distances
 
 
 def voronoi(image, R, h):
     n = R
     m = h
 
+    margin = 0.1
     image = np.array(image)[:, :, :3]
     rows, cols, _ = image.shape
-    centers = np.array((np.random.randint(0, rows, n), np.random.randint(0, cols, m))).T
-    centers = [Point(x) for x in centers]
+    centers = np.array((np.random.randint(-int(margin * rows), int(rows + rows * margin), n),
+                        np.random.randint(-int(margin * cols), int(cols + margin * cols), m))).T
+
+    pixels = np.stack(np.meshgrid(range(rows), range(cols)), axis=-1).reshape(-1, 2)
+    distances = pairwise_distances(pixels, centers)
     centers_to_i_j = [([], []) for _ in centers]
     i_j_to_centers = [[-1 for _ in range(cols)] for _ in range(rows)]
-
-    for i in tqdm(range(rows), total=rows):
-        for j in range(cols):
-            pixel = Point(i, j)
-            min = math.inf
-            for l, center in enumerate(centers):
-                dis = center.distance(pixel)
-                if (dis < min):
-                    min = dis
-                    i_j_to_centers[i][j] = l
-                    centers_to_i_j[l][0].append(i)
-                    centers_to_i_j[l][1].append(j)
-
+    for l, p in tqdm(enumerate(pixels), total=len(pixels)):
+        i, j = p
+        c = np.argmin(distances[l])
+        centers_to_i_j[c][0].append(i)
+        centers_to_i_j[c][1].append(j)
+        i_j_to_centers[i][j] = c
 
     polygon_to_color = [255 for _ in centers]
     for l in range(len(centers)):
@@ -47,7 +45,6 @@ def voronoi(image, R, h):
 
     pixelized_image = Image.fromarray(np.uint8(pixelized_image))
     return pixelized_image
-
 
 
 def hexagon(image, R, h):

@@ -3,12 +3,12 @@ Using this repository you can pixelize your images into hexagon grid!
 ### Samples
 Normal image
 
-Hexagonal             | Square          |       Splited
-:-------------------------:|:-------------------------:|:-------------------------:
-![Normal](samples/sample.jpg) | ![Normal](samples/monroe.jpg)  |  ![Normal](samples/sprited.jpg)
-![R=5](samples/pixelized_5.jpg) | ![R=30](samples/monroe_30.jpg)  |  ![R=5](samples/split_2.jpg)
-![R=15](samples/pixelized_15.jpg) | ![R=20](samples/monroe_20.jpg)  |  ![R=50](samples/split_7.jpg)
-![R=30](samples/pixelized_30.jpg) | ![R=10](samples/monroe_10.jpg)  |  ![R=200](samples/split_23.jpg)
+Hexagonal             | Square          |       Splited      |  Voronoi
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![Normal](samples/hex/light.jpg) | ![Normal](samples/sq/monroe.jpg)  |  ![Normal](samples/split/sprited.jpg) | ![Normal](samples/vor/mona.jpg)
+![R=5](samples/hex/hex_5.jpg) | ![R=30](samples/sq/monroe_30.jpg)  |  ![R=5](samples/split/split_2.jpg) | ![R=5](samples/vor/mona_300.jpg)
+![R=15](samples/hex/hex_15.jpg) | ![R=20](samples/sq/monroe_20.jpg)  |  ![R=50](samples/split/split_7.jpg) | ![R=5](samples/vor/mona_1000.jpg)
+![R=30](samples/hex/hex_30.jpg) | ![R=10](samples/sq/monroe_10.jpg)  |  ![R=200](samples/split/split_23.jpg) | ![R=5](samples/vor/mona_4000.jpg)
 
 
 
