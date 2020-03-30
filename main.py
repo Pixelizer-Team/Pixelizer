@@ -131,24 +131,24 @@ def square(image, R, h):
 
 
 def split(image, R, h):
-    n = R
-    h = R//2 if h is None else h
-
-    def crop(im, w1, h1, n):
-        box = (w1, h1, w1 + n, h1 + n)
-        a = im.crop(box)
-        return a
-
     width, height = image.size
-    box = (width + (width * h) // n, height + (height * h) // n)
+    n_w = int(R * width / 100)
+    n_h = int(R * height / 100)
+    h = max(1, (n_w + n_h) // 20) if h is None else h
+
+    def crop(im, w1, h1, n_w1, n_h1):
+        box = (w1, h1, w1 + n_w1, h1 + n_h1)
+        return im.crop(box)
+
+    box = (width + (width // n_w - 1) * h, height + (height // n_h - 1) * h)
     background = Image.new('RGB', box, color=(255, 255, 255))
 
     i_c = 0
     j_c = 0
-    for i in range(0, height, n):
-        for j in range(0, width, n):
-            foreground = crop(image, j, i, n)
-            box = ((n + h) * (j_c), (n + h) * (i_c))
+    for i in range(0, height, n_h):
+        for j in range(0, width, n_w):
+            foreground = crop(image, j, i, n_w, n_h)
+            box = ((n_w + h) * (j_c), (n_h + h) * (i_c))
             background.paste(foreground, box)
             j_c += 1
         i_c += 1
@@ -164,7 +164,6 @@ switcher = {
     'split': split,
 }
 
-
 if __name__ == '__main__':
     image_name = str(sys.argv[1])
     outfile_name = str(sys.argv[2])
@@ -178,5 +177,5 @@ if __name__ == '__main__':
     image = Image.open(image_name)
     pixelized_image = switcher[mode](image, R, h)
 
-    pixelized_image.show()
+    # pixelized_image.show()
     pixelized_image.save(outfile_name)
