@@ -57,6 +57,7 @@ def hexagon(image, R, h):
 def square(image, R, h):
     n = R
     pixel_size = R // 2 if h is None else h
+    w, h = image.size
 
     def get_center(im, w, h, ps=pixel_size):
         w //= 2
@@ -72,7 +73,6 @@ def square(image, R, h):
         # center.show()
         return Image.fromarray(center)
 
-    w, h = image.size
     pixel_size -= (pixel_size % 2)
     box = (n * pixel_size, n * pixel_size)
     background = Image.new('RGB', box, (255, 255, 255))
@@ -130,9 +130,16 @@ if __name__ == '__main__':
         h = int(sys.argv[5])
     except:
         h = None
+    try:
+        alpha = float(sys.argv[6])
+    except:
+        alpha = None
 
     image = Image.open(image_name)
     pixelized_image = switcher[mode](image, R, h)
+    if mode != 'split' and alpha is not None:
+        pixelized_image = Image.fromarray(
+            (np.array(image) * alpha + (1 - alpha) * np.array(pixelized_image)).astype(np.uint8))
 
     # pixelized_image.show()
     pixelized_image.save(outfile_name)
