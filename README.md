@@ -6,9 +6,9 @@ Normal image
 Hexagonal             | Square          |       Splited
 :-------------------------:|:-------------------------:|:-------------------------:
 ![Normal](samples/sample.jpg) | ![Normal](samples/monroe.jpg)  |  ![Normal](samples/sprited.jpg)
-![R=5](samples/pixelized_5.jpg) | ![R=30](samples/monroe_30.jpg)  |  ![R=5](samples/split_5.jpg)
-![R=15](samples/pixelized_15.jpg) | ![R=20](samples/monroe_20.jpg)  |  ![R=50](samples/split_50.jpg)
-![R=30](samples/pixelized_30.jpg) | ![R=10](samples/monroe_10.jpg)  |  ![R=100](samples/split_100.jpg)
+![R=5](samples/pixelized_5.jpg) | ![R=30](samples/monroe_30.jpg)  |  ![R=5](samples/split_2.jpg)
+![R=15](samples/pixelized_15.jpg) | ![R=20](samples/monroe_20.jpg)  |  ![R=50](samples/split_7.jpg)
+![R=30](samples/pixelized_30.jpg) | ![R=10](samples/monroe_10.jpg)  |  ![R=200](samples/split_23.jpg)
 
 
 
