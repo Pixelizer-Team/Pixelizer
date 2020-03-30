@@ -8,6 +8,48 @@ from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 
 
+def voronoi(image, R, h):
+    n = R
+    m = h
+
+    image = np.array(image)[:, :, :3]
+    rows, cols, _ = image.shape
+    centers = np.array((np.random.randint(0, rows, n), np.random.randint(0, cols, m))).T
+    centers = [Point(x) for x in centers]
+    centers_to_i_j = [([], []) for _ in centers]
+    i_j_to_centers = [[-1 for _ in range(cols)] for _ in range(rows)]
+
+    for i in tqdm(range(rows), total=rows):
+        for j in range(cols):
+            pixel = Point(i, j)
+            min = math.inf
+            for l, center in enumerate(centers):
+                dis = center.distance(pixel)
+                if (dis < min):
+                    min = dis
+                    i_j_to_centers[i][j] = l
+                    centers_to_i_j[l][0].append(i)
+                    centers_to_i_j[l][1].append(j)
+
+
+    polygon_to_color = [255 for _ in centers]
+    for l in range(len(centers)):
+        indices = centers_to_i_j[l]
+        if len(indices[0]) > 0:
+            color = np.mean(image[indices], axis=0)
+            polygon_to_color[l] = color
+
+    pixelized_image = np.ones_like(image) * 255.0
+    for i in range(rows):
+        for j in range(cols):
+            polygon = i_j_to_centers[i][j]
+            pixelized_image[i, j] = polygon_to_color[polygon]
+
+    pixelized_image = Image.fromarray(np.uint8(pixelized_image))
+    return pixelized_image
+
+
+
 def hexagon(image, R, h):
     image = np.array(image)[:, :, :3]
     rows, cols, _ = image.shape
@@ -116,6 +158,7 @@ def split(image, R, h):
 
 
 switcher = {
+    'vor': voronoi,
     'hex': hexagon,
     'sq': square,
     'split': split,
