@@ -3,15 +3,21 @@ Using this repository you can pixelize your images into hexagon grid!
 ### Samples
 Normal image
 
-Hexagonal             | Square          |       Splited      |  Voronoi
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![Normal](samples/hex/light.jpg) | ![Normal](samples/sq/monroe.jpg)  |  ![Normal](samples/split/sprited.jpg) | ![Normal](samples/vor/mona.jpg)
-![R=5](samples/hex/hex_5.jpg) | ![R=30](samples/sq/monroe_30.jpg)  |  ![R=5](samples/split/split_2.jpg) | ![R=5](samples/vor/mona_300.jpg)
-![R=15](samples/hex/hex_15.jpg) | ![R=20](samples/sq/monroe_20.jpg)  |  ![R=50](samples/split/split_7.jpg) | ![R=5](samples/vor/mona_1000.jpg)
-![R=30](samples/hex/hex_30.jpg) | ![R=10](samples/sq/monroe_10.jpg)  |  ![R=200](samples/split/split_23.jpg) | ![R=5](samples/vor/mona_4000.jpg)
+Hexagonal             | Square          |       Splited      
+:-------------------------:|:-------------------------:|:-------------------------:
+![Normal](samples/hex/light.jpg) | ![Normal](samples/sq/monroe.jpg)  |  ![Normal](samples/split/sprited.jpg) 
+![R=5](samples/hex/hex_5.jpg) | ![R=30](samples/sq/monroe_30.jpg)  |  ![R=5](samples/split/split_2.jpg)
+![R=15](samples/hex/hex_15.jpg) | ![R=20](samples/sq/monroe_20.jpg)  |  ![R=50](samples/split/split_7.jpg) | 
+![R=30](samples/hex/hex_30.jpg) | ![R=10](samples/sq/monroe_10.jpg)  |  ![R=200](samples/split/split_23.jpg) | 
 
-
-
+Voronoi                   |         Cubical
+:-------------------------:|:-------------------------:
+ ![Normal](samples/vor/mona.jpg) | ![Normal](samples/cube/scream.jpg)
+ ![R=300](samples/vor/mona_300.jpg) | ![R=10](samples/cube/scream_10.jpg)
+ ![R=1000](samples/vor/mona_1000.jpg) | ![R=30](samples/cube/scream_30.jpg)
+ ![R=4000](samples/vor/mona_4000.jpg) | ![R=50](samples/cube/scream_50.jpg)
+ 
+ 
 ### Requirements
 Python 3+
 
