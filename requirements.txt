@@ -2,4 +2,4 @@ shapely
 numpy
 Pillow
 tqdm
-sklearn
+scikit-learn
