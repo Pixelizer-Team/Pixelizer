@@ -22,9 +22,9 @@ Pyramid                   |         Cubical         |   Double Cubical
 Blob                    |   Voronoi    |
 :-------------------------:|:-------------------------:|
 ![Normal](samples/blob/gothic.jpg) | ![Normal](samples/vor/mona.jpg)
-![R=5](samples/blob/gothic_5.jpg) | ![R=300](samples/vor/mona_300.jpg) 
+![R=5](samples/blob/gothic_5.jpg) | ![R=300](samples/vor/mona_4000.jpg) 
 ![R=10](samples/blob/gothic_10.jpg) |  ![R=1000](samples/vor/mona_1000.jpg)
-![R=20](samples/blob/gothic_20.jpg) | ![R=4000](samples/vor/mona_4000.jpg)
+![R=20](samples/blob/gothic_20.jpg) | ![R=4000](samples/vor/mona_300.jpg)
 
 ### Requirements
 Python 3+
