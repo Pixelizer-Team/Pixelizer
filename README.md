@@ -13,7 +13,7 @@ Hexagonal             | Square          |       Splited
 
 Pyramid                   |         Cubical         |   Double Cubical
 :-------------------------:|:-------------------------:|:-------------------------:
-  | ![Normal](samples/pyramid/wave.jpg) | ![Normal](samples/dcube/gogh.jpg)
+ ![Normal](samples/pyramid/wave.jpg) | ![Normal](samples/cube/scream.jpg) | ![Normal](samples/dcube/gogh.jpg) 
  ![R=300](samples/pyramid/wave_30.jpg) | ![R=10](samples/cube/scream_5.jpg) | ![R=15](samples/dcube/gogh_15.jpg)
  ![R=1000](samples/pyramid/wave_50.jpg) | ![R=30](samples/cube/scream_10.jpg) | ![R=30](samples/dcube/gogh_30.jpg)
  ![R=4000](samples/pyramid/wave_80.jpg) | ![R=50](samples/cube/scream_30.jpg) | ![R=50](samples/dcube/gogh_50.jpg)
