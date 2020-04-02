@@ -2,3 +2,4 @@ shapely
 numpy
 Pillow
 tqdm
+sklearn
