@@ -11,7 +11,7 @@ from sklearn.metrics import pairwise_distances
 
 def voronoi(image, R, h):
     n = R
-    m = h
+    m = R if h is None else h
 
     margin = 0.1
     image = np.array(image)[:, :, :3]
