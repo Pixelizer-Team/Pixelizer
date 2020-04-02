@@ -1,4 +1,5 @@
-Using this repository you can pixelize your images into hexagon grid!
+Welcome to Pixelizer!
+In an era in which resolution has been overrated by diverse propagandas, we strike by redefining our pixels!
 
 ### Samples
 Normal image
