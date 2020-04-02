@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 
 def hexagon_tile(xs, ys, xe, ye, radius):
@@ -300,7 +301,6 @@ def double_cubic_tile(xs, ys, xe, ye, radius):
             polygons.append(poly6)
             weights.append(0.8)
 
-
             counter += 1
             xs += w
         ys += yoffset
@@ -335,6 +335,68 @@ def the_wall_tile(xs, ys, xe, ye, radius):
             polygons.append(poly)
             weights.append(1.0)
             y += radius * 2
+        x += radius
+
+    return polygons, weights
+
+
+def pyramid_tile(xs, ys, xe, ye, radius):
+    polygons = []
+    weights = []
+    x = xs
+    margin = max(2, radius / 5) / radius
+    shining = 3
+    c = 0.3
+    while x < xe:
+        y_start = ys
+        y = y_start
+        while y < ye:
+            p1x = x
+            p1y = y
+            p2x = x
+            p2y = y + radius
+            p3x = x + radius
+            p3y = p2y
+            p4x = p3x
+            p4y = y
+            if 2 * margin >= radius:
+                alpha = 0.5
+                beta = 0.5
+            else:
+                alpha = np.random.uniform(margin, 1 - margin)
+                beta = np.random.uniform(margin, 1 - margin)
+            cx = alpha * p1x + (1 - alpha) * p4x
+            cy = beta * p1y + (1 - beta) * p2y
+
+            poly1 = [
+                (p1x, p1y),
+                (p2x, p2y),
+                (cx, cy),
+            ]
+            poly2 = [
+                (p2x, p2y),
+                (p3x, p3y),
+                (cx, cy),
+            ]
+            poly3 = [
+                (p3x, p3y),
+                (p4x, p4y),
+                (cx, cy),
+            ]
+            poly4 = [
+                (p4x, p4y),
+                (p1x, p1y),
+                (cx, cy),
+            ]
+            polygons.append(poly1)
+            polygons.append(poly2)
+            polygons.append(poly3)
+            polygons.append(poly4)
+            weights.append(0.8 + c * alpha ** shining)
+            weights.append(0.6 + c * beta ** shining)
+            weights.append(0.4 + c * (1 - alpha) ** shining)
+            weights.append(0.7 + c * (1 - beta) ** shining)
+            y += radius
         x += radius
 
     return polygons, weights
