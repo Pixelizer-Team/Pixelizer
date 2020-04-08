@@ -7,6 +7,7 @@ from tile_generator import hexagon_tile, cubic_tile, the_wall_tile, double_cubic
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 from sklearn.metrics import pairwise_distances
+from gifify import save_gif
 
 
 # def intra_block_shuffle(image, R, h):
@@ -17,6 +18,61 @@ from sklearn.metrics import pairwise_distances
 #         for j in range(0, cols, R):
 #             image_segment = image[i: i + R, j: j + R, :]
 #             image_segment_reshape = image_segment.reshape([-1, 3])
+
+
+def voronoi_gif(image, R, h, x=10):
+    n = R
+    m = R if h is None else h
+
+    margin = 0.1
+    image = np.array(image)[:, :, :3]
+    rows, cols, _ = image.shape
+    rows *= 2
+    centers = np.array((np.random.randint(-int(margin * rows), int(rows + rows * margin), n),
+                        np.random.randint(-int(margin * cols), int(cols + margin * cols), m))).T
+
+    pixels = np.stack(np.meshgrid(range(rows), range(cols)), axis=-1).reshape(-1, 2)
+    distances = pairwise_distances(pixels, centers)
+    centers_to_i_j = [([], []) for _ in centers]
+    i_j_to_centers = [[-1 for _ in range(cols)] for _ in range(rows)]
+    for l, p in tqdm(enumerate(pixels), total=len(pixels)):
+        i, j = p
+        c = np.argmin(distances[l])
+        centers_to_i_j[c][0].append(i)
+        centers_to_i_j[c][1].append(j)
+        i_j_to_centers[i][j] = c
+
+    frames = []
+    offset = 0
+    rows //= 2
+    # print(rows, cols)
+    for r in range(x):
+        polygon_to_color = [255 for _ in centers]
+        pixelized_image = np.ones_like(image) * 255.0
+        for l in range(len(centers)):
+            indices = [[], []]
+            for a, b in zip(centers_to_i_j[l][0], centers_to_i_j[l][1]):
+                if offset <= a < offset + rows:
+                    indices[0].append(a-offset)
+                    indices[1].append(b)
+            # [centers_to_i_j[l]]
+            # offs = [offset for _ in indices[0]]
+            # tmp = [a - b for a, b in zip(indices[0], offs)]
+            # indices = [tmp, indices[1]]
+            if len(indices) > 0:
+                color = np.mean(image[indices], axis=0)
+                polygon_to_color[l] = color
+
+            for i, j in zip(indices[0], indices[1]):
+                polygon = i_j_to_centers[offset + i][j]
+                pixelized_image[i, j] = polygon_to_color[polygon]
+
+        offset += (rows // 2) // x
+        pixelized_image = Image.fromarray(np.uint8(pixelized_image))
+        frames.append(pixelized_image)
+
+    return frames
+
 
 def blob(image, R, h):
     image = np.array(image)[:, :, :3]
@@ -405,6 +461,7 @@ switcher = {
     'wall': wall,
     'blob': blob,
     'pyramid': pyramid,
+    'vor_gif': voronoi_gif,
 }
 
 if __name__ == '__main__':
@@ -428,4 +485,7 @@ if __name__ == '__main__':
             (np.array(image) * alpha + (1 - alpha) * np.array(pixelized_image)).astype(np.uint8))
 
     # pixelized_image.show()
-    pixelized_image.save(outfile_name)
+    if mode != 'vor_gif':
+        pixelized_image.save(outfile_name)
+    else:
+        save_gif(pixelized_image, outfile_name)

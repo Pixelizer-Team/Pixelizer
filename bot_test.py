@@ -3,20 +3,32 @@ import logging
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
+
+with open('Token.txt', 'r') as confidential:
+    our_secret_token = confidential.readline()
+
+examples = {
+    'cube': 'samples/cube/scream_5.jpg',
+    'dcube': 'samples/dcube/gogh_15.jpg',
+    'vor': 'samples/vor/mona_1000.jpg',
+    'hex': 'samples/hex/hex_15.jpg',
+    'wall': 'samples/wall/green_30.jpg',
+    'sq': 'samples/sq/monroe_20.jpg',
+    'split': 'samples/split/split_23.jpg',
+}
+
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
-with open('Token.txt', 'r') as confidential:
-    our_secret_token = confidential.readline()
-
 
 def start(update, context):
     """Send a message when the command /start is issued."""
     update.message.reply_text('Welcome to Pixelizer!\n'
-                              'In an era in which resolution has been overrated by diverse propagandas, we strike by redefining our pixels!')
+                              'In an era in which resolution has become overrated by diverse propagandas, we strike by redefining our pixels!')
+    # telegram.Bot.send_photo(our_secret_token, photo=examples['cube'])
 
 
 def help(update, context):
