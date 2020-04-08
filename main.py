@@ -20,7 +20,7 @@ from gifify import save_gif
 #             image_segment_reshape = image_segment.reshape([-1, 3])
 
 
-def voronoi_gif(image, R, h, x=10):
+def voronoi_gif(image, R, h, x=100):
     n = R
     m = R if h is None else h
 
