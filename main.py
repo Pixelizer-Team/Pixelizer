@@ -1,7 +1,7 @@
 import sys
 import math
 from tqdm import tqdm
-from PIL import Image
+from PIL import Image, ImageDraw
 import numpy as np
 from tile_generator import hexagon_tile, cubic_tile, the_wall_tile, double_cubic_tile, pyramid_tile
 from shapely.geometry import Point
@@ -18,6 +18,33 @@ from gifify import save_gif
 #         for j in range(0, cols, R):
 #             image_segment = image[i: i + R, j: j + R, :]
 #             image_segment_reshape = image_segment.reshape([-1, 3])
+
+
+def circle_crop(image):
+    npImage = np.array(image)
+    h, w = image.size
+    alpha = Image.new('L', image.size, 0)
+    draw = ImageDraw.Draw(alpha)
+    r = min(h, w)
+    draw.pieslice([0, 0, r, r], 0, 360, fill=255)
+    npAlpha = np.array(alpha)
+    # Add alpha layer to RGB
+    npImage = np.dstack((npImage, npAlpha))
+
+    circle_image = Image.fromarray(npImage)
+    return circle_image
+
+
+def twirl_gif(image, degree, length=100):
+    frames = []
+    circle_image = circle_crop(image)
+
+    for i in range(1, length):
+        if (degree*i) % 180 == 0:
+            continue
+        frames.append(circle_image.rotate(degree*i))
+
+    return frames
 
 
 def voronoi_gif(image, R, h, x=100):
@@ -462,6 +489,7 @@ switcher = {
     'blob': blob,
     'pyramid': pyramid,
     'vor_gif': voronoi_gif,
+    'twirl_gif': twirl_gif,
 }
 
 if __name__ == '__main__':
@@ -485,7 +513,7 @@ if __name__ == '__main__':
             (np.array(image) * alpha + (1 - alpha) * np.array(pixelized_image)).astype(np.uint8))
 
     # pixelized_image.show()
-    if mode != 'vor_gif':
-        pixelized_image.save(outfile_name)
-    else:
+    if mode == 'vor_gif' or mode == 'twirl_gif':
         save_gif(pixelized_image, outfile_name)
+    else:
+        pixelized_image.save(outfile_name)

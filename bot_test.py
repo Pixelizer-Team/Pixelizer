@@ -28,7 +28,9 @@ def start(update, context):
     """Send a message when the command /start is issued."""
     update.message.reply_text('Welcome to Pixelizer!\n'
                               'In an era in which resolution has become overrated by diverse propagandas, we strike by redefining our pixels!')
+    bot = context.bot
     # telegram.Bot.send_photo(our_secret_token, photo=examples['cube'])
+    bot.send_photo(chat_id=update.message.chat_id, photo=open(examples['cube'], 'rb'))
 
 
 def help(update, context):
